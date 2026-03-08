@@ -2,10 +2,238 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Satellite Eyes"
-        Width="500" Height="600"
+        Width="500" Height="830"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#F3F3F3"
+        FontFamily="Segoe UI"
         Icon="satellite.ico">
-    <Grid>
-        <TextBlock Text="Satellite Eyes" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+
+    <Window.Resources>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="8" ShadowDepth="1" Opacity="0.08" Color="Black"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentButton" TargetType="Button">
+            <Setter Property="Background" Value="#0067C0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#1975CA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#005A9E"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#CCE4F7"/>
+                                <Setter Property="Foreground" Value="#99FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SubtleButton" TargetType="Button">
+            <Setter Property="Background" Value="#E5E5E5"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#DADADA"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#CDCDCD"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Background" Value="#F0F0F0"/>
+                                <Setter Property="Foreground" Value="#999999"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#1A1A1A"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="20,16,20,16">
+
+        <!-- Header -->
+        <StackPanel Margin="0,0,0,10">
+            <TextBlock Text="Satellite Eyes" FontSize="24" FontWeight="SemiBold" Foreground="#1A1A1A"/>
+            <TextBlock x:Name="StatusText" Text="Starting..." FontSize="12" Foreground="#666" Margin="0,2,0,0"/>
+            <TextBlock x:Name="LocationText" Text="" FontSize="11" Foreground="#999"/>
+        </StackPanel>
+
+        <!-- Location card -->
+        <Border Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Location" Style="{StaticResource FieldLabel}" Margin="0,0,0,6"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="LocationSourceCombo" Margin="0,0,0,6"
+                          SelectionChanged="LocationSourceCombo_Changed">
+                    <ComboBoxItem Content="Your Location (GPS)" Tag="gps"/>
+                    <ComboBoxItem Content="Interesting Sights" Tag="all"/>
+                    <ComboBoxItem Content="Airports" Tag="airport"/>
+                    <ComboBoxItem Content="World Heritage Sites" Tag="world_heritage_site"/>
+                </ComboBox>
+
+                <TextBlock x:Name="RotationLabel" Grid.Row="1" Grid.Column="0" Text="Change every" Style="{StaticResource FieldLabel}"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RotationCombo"
+                          SelectionChanged="RotationCombo_Changed">
+                    <ComboBoxItem Content="1 Hour" Tag="3600"/>
+                    <ComboBoxItem Content="6 Hours" Tag="21600"/>
+                    <ComboBoxItem Content="24 Hours" Tag="86400"/>
+                </ComboBox>
+            </Grid>
+        </Border>
+
+        <!-- Map card -->
+        <Border Style="{StaticResource Card}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Style" Style="{StaticResource FieldLabel}" Margin="0,0,0,6"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="MapStyleCombo" Margin="0,0,0,6"
+                          SelectionChanged="MapStyleCombo_Changed"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Zoom" Style="{StaticResource FieldLabel}" Margin="0,0,0,6"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,6">
+                    <Slider x:Name="ZoomSlider" Minimum="10" Maximum="20"
+                            TickFrequency="1" IsSnapToTickEnabled="True" TickPlacement="BottomRight"
+                            ValueChanged="ZoomSlider_Changed"/>
+                    <TextBlock x:Name="ZoomLabel" Text="15 — City" Foreground="#888" FontSize="11"/>
+                </StackPanel>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Effect" Style="{StaticResource FieldLabel}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="EffectCombo"
+                          SelectionChanged="EffectCombo_Changed"/>
+            </Grid>
+        </Border>
+
+        <!-- Preview -->
+        <Border Style="{StaticResource Card}" Padding="0">
+            <Border BorderBrush="#E0E0E0" BorderThickness="0" CornerRadius="8"
+                    Height="220" ClipToBounds="True">
+                <Grid>
+                    <Image x:Name="PreviewImage" Stretch="UniformToFill"/>
+                    <TextBlock x:Name="PreviewLoading" Text="Loading preview..."
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="#999" FontStyle="Italic" FontSize="12"/>
+                </Grid>
+            </Border>
+        </Border>
+
+        <!-- Options card -->
+        <Border Style="{StaticResource Card}">
+            <StackPanel>
+                <CheckBox x:Name="LockScreenCheck" Content="Set lock screen image" Margin="0,0,0,6" FontSize="13"
+                          Checked="Checkbox_Changed" Unchecked="Checkbox_Changed"/>
+                <CheckBox x:Name="WatermarkCheck" Content="Show location name on wallpaper" Margin="0,0,0,6" FontSize="13"
+                          Checked="Checkbox_Changed" Unchecked="Checkbox_Changed"/>
+                <CheckBox x:Name="DayNightCheck" Content="Day/night dimming" Margin="0,0,0,6" FontSize="13"
+                          Checked="Checkbox_Changed" Unchecked="Checkbox_Changed"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                    <CheckBox x:Name="WeatherCheck" Content="Weather radar" FontSize="13"
+                              Checked="Checkbox_Changed" Unchecked="Checkbox_Changed"
+                              VerticalAlignment="Center"/>
+                    <ComboBox x:Name="WeatherPositionCombo" Margin="10,0,0,0" Width="120"
+                              IsEnabled="False" SelectionChanged="WeatherPositionCombo_Changed">
+                        <ComboBoxItem Content="Top Right" Tag="top-right"/>
+                        <ComboBoxItem Content="Top Left" Tag="top-left"/>
+                        <ComboBoxItem Content="Bottom Right" Tag="bottom-right"/>
+                        <ComboBoxItem Content="Bottom Left" Tag="bottom-left"/>
+                    </ComboBox>
+                </StackPanel>
+                <CheckBox x:Name="StartupCheck" Content="Launch at startup" FontSize="13"
+                          Checked="Checkbox_Changed" Unchecked="Checkbox_Changed"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Buttons -->
+        <Grid Margin="0,6,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Hide to Tray" Style="{StaticResource SubtleButton}"
+                    Margin="0,0,8,0" Click="HideToTray_Click"/>
+            <Button Grid.Column="1" Content="Quit" Style="{StaticResource SubtleButton}" Click="Quit_Click"
+                    Foreground="#888"/>
+
+            <Button Grid.Column="3" x:Name="NewLocationButton" Content="New Location"
+                    Style="{StaticResource SubtleButton}" Margin="0,0,8,0"
+                    Click="NewLocation_Click" IsEnabled="False"/>
+            <Button Grid.Column="4" x:Name="RefreshButton" Content="Refresh Now"
+                    Style="{StaticResource AccentButton}"
+                    Click="Refresh_Click" IsEnabled="False"/>
+        </Grid>
+
+        <!-- Attribution -->
+        <TextBlock Margin="0,12,0,4" FontSize="11.5" Foreground="#777" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" TextAlignment="Center">
+            <Run Text="Windows port by Gregg Knowles (gregg@live.com)"/>
+            <LineBreak/>
+            <Run Text="Based on"/><Run Text=" "/><Hyperlink x:Name="OriginalLink" RequestNavigate="Hyperlink_Navigate"
+                NavigateUri="https://github.com/tomtaylor/satellite-eyes"
+                Foreground="#666" TextDecorations="Underline">Satellite Eyes for macOS</Hyperlink>
+            <Run Text=" by Tom Taylor"/>
+        </TextBlock>
+
+    </StackPanel>
 </Window>
