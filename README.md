@@ -22,6 +22,9 @@ Sets your desktop wallpaper to satellite imagery of your location. A Windows por
 
 <img width="2879" height="1799" alt="image" src="https://github.com/user-attachments/assets/feff5fa5-87d0-4c94-ad8f-21d6271b55ed" />
 
+<img width="479" height="817" alt="image" src="https://github.com/user-attachments/assets/011030ce-c88b-4f7b-8390-185050a5be66" />
+
+
 
 ## Requirements
 
