@@ -1,0 +1,93 @@
+# Satellite Eyes for Windows
+
+Sets your desktop wallpaper to satellite imagery of your location. A Windows port of [Satellite Eyes for macOS](https://github.com/tomtaylor/satellite-eyes) by Tom Taylor.
+
+![screenshot](https://img.shields.io/badge/platform-Windows%2010%2F11-blue)
+
+## Features
+
+- **Live location** via Windows GPS or IP-based fallback
+- **Curated locations** — airports, World Heritage Sites, and other interesting sights with automatic rotation
+- **10 map styles** — Google Satellite, Bing Aerial, OpenStreetMap, Esri World Imagery, CartoDB, Stamen Watercolour, and more
+- **Image effects** — darken, desaturate, pixellate, blur
+- **Weather radar overlay** with current conditions and 3-day forecast (Open-Meteo + RainViewer)
+- **Day/night dimming** based on solar elevation
+- **Location watermark** on the wallpaper
+- **Lock screen** image support
+- **Multi-monitor** — spans or composes across all displays
+- **System tray** — runs quietly in the background
+- **Launch at startup** option
+
+## Screenshot
+
+*Coming soon*
+
+## Requirements
+
+- Windows 10 (build 19041) or later
+- .NET 8 Runtime (for the small build) or no dependencies (for the standalone build)
+
+## Download
+
+Grab the latest release from the [Releases](https://github.com/gregg-knowles/satellite-eyes-win/releases) page:
+
+- **Standalone** (~180 MB) — includes the .NET runtime, runs anywhere
+- **Small** (~25 MB) — requires [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed
+
+## Building from source
+
+```
+git clone https://github.com/gregg-knowles/satellite-eyes-win.git
+cd satellite-eyes-win
+dotnet build
+```
+
+To produce release binaries:
+
+```
+publish.bat
+```
+
+This creates both standalone and framework-dependent single-file executables in the `publish/` folder.
+
+## How it works
+
+1. Determines your location via the Windows Geolocation API, falling back to IP geolocation (ipapi.co)
+2. Fetches map tiles from the selected provider and composites them to match your screen resolution
+3. Optionally applies image effects, weather overlay, day/night dimming, and a location watermark
+4. Sets the result as your desktop wallpaper (and optionally lock screen)
+
+## Configuration
+
+All settings are accessible from the main window. Settings are stored in:
+
+```
+%APPDATA%\SatelliteEyesWin\settings.json
+```
+
+Cached map images are stored in:
+
+```
+%APPDATA%\SatelliteEyesWin\cache\
+```
+
+## GPS location troubleshooting
+
+If GPS location isn't working, check your Windows settings:
+
+1. **Settings > Privacy & Security > Location**
+2. Ensure **Location services** is turned on
+3. Scroll to the bottom and enable **Let desktop apps access your location**
+
+If GPS still fails, the app falls back to IP-based geolocation automatically.
+
+## Credits
+
+- Original [Satellite Eyes for macOS](https://github.com/tomtaylor/satellite-eyes) by [Tom Taylor](https://tomtaylor.co.uk/)
+- Weather data from [Open-Meteo](https://open-meteo.com/) (free, no API key required)
+- Radar imagery from [RainViewer](https://www.rainviewer.com/)
+- Map tiles from Google, Bing, OpenStreetMap, Esri, CartoDB, and Stamen
+
+## Licence
+
+MIT
