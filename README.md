@@ -2,7 +2,13 @@
 
 Sets your desktop wallpaper to satellite imagery of your location. A Windows port of [Satellite Eyes for macOS](https://github.com/tomtaylor/satellite-eyes) by Tom Taylor.
 
-![screenshot](https://img.shields.io/badge/platform-Windows%2010%2F11-blue)
+![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-blue)
+![.NET](https://img.shields.io/badge/.NET-8.0-purple)
+![License](https://img.shields.io/github/license/gregg-knowles/satellite-eyes-win)
+![GitHub release](https://img.shields.io/github/v/release/gregg-knowles/satellite-eyes-win)
+![Downloads](https://img.shields.io/github/downloads/gregg-knowles/satellite-eyes-win/total)
+![GitHub stars](https://img.shields.io/github/stars/gregg-knowles/satellite-eyes-win)
+![GitHub issues](https://img.shields.io/github/issues/gregg-knowles/satellite-eyes-win)
 
 ## Features
 
