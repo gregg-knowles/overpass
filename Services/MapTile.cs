@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public static class MapTile
 {

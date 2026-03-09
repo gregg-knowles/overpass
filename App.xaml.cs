@@ -1,7 +1,7 @@
 using System.Windows;
 using Forms = System.Windows.Forms;
 
-namespace SatelliteEyesWin;
+namespace Overpass;
 
 public partial class App : System.Windows.Application
 {

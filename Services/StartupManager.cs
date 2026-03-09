@@ -1,10 +1,10 @@
 using Microsoft.Win32;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public static class StartupManager
 {
-    private const string AppName = "SatelliteEyesWin";
+    private const string AppName = "Overpass";
     private const string RunKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
 
     public static void SetLaunchAtStartup(bool enable)

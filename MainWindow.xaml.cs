@@ -7,11 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using SatelliteEyesWin.Models;
-using SatelliteEyesWin.Services;
+using Overpass.Models;
+using Overpass.Services;
 using Forms = System.Windows.Forms;
 
-namespace SatelliteEyesWin;
+namespace Overpass;
 
 public partial class MainWindow : Window
 {
@@ -30,7 +30,7 @@ public partial class MainWindow : Window
     static MainWindow()
     {
         _http = new HttpClient();
-        _http.DefaultRequestHeaders.Add("User-Agent", "SatelliteEyesWin/1.0");
+        _http.DefaultRequestHeaders.Add("User-Agent", "Overpass/1.0");
     }
 
     public MainWindow()
@@ -45,7 +45,7 @@ public partial class MainWindow : Window
     {
         _trayIcon = new Forms.NotifyIcon
         {
-            Text = "Satellite Eyes",
+            Text = "Overpass",
             Icon = LoadAppIcon(),
             Visible = true
         };
@@ -172,11 +172,11 @@ public partial class MainWindow : Window
     private void DoFirstRun()
     {
         var result = System.Windows.MessageBox.Show(this,
-            "Satellite Eyes sets your desktop wallpaper to satellite imagery of your location.\n\n" +
+            "Overpass sets your desktop wallpaper to satellite imagery of your location.\n\n" +
             "Would you like to use your current location (GPS)?\n\n" +
             "Click 'Yes' for GPS location, or 'No' to explore interesting sights around the world.\n\n" +
             "(If GPS doesn't work, you can switch in Settings later.)",
-            "Welcome to Satellite Eyes",
+            "Welcome to Overpass",
             MessageBoxButton.YesNo, MessageBoxImage.Question);
 
         _settings!.UseCurrentLocation = result == MessageBoxResult.Yes;
@@ -377,7 +377,7 @@ public partial class MainWindow : Window
     {
         StatusText.Text = message;
         if (_trayIcon != null)
-            _trayIcon.Text = $"Satellite Eyes - {(message.Length > 50 ? message[..50] : message)}";
+            _trayIcon.Text = $"Overpass - {(message.Length > 50 ? message[..50] : message)}";
 
         if (_locationService != null)
         {
@@ -411,7 +411,7 @@ public partial class MainWindow : Window
         if (!_hasShownTrayTip)
         {
             _hasShownTrayTip = true;
-            _trayIcon?.ShowBalloonTip(2000, "Satellite Eyes",
+            _trayIcon?.ShowBalloonTip(2000, "Overpass",
                 "Running in the system tray. Double-click the icon to show.", Forms.ToolTipIcon.Info);
         }
     }
@@ -435,7 +435,7 @@ public partial class MainWindow : Window
             if (!_hasShownTrayTip)
             {
                 _hasShownTrayTip = true;
-                _trayIcon?.ShowBalloonTip(2000, "Satellite Eyes",
+                _trayIcon?.ShowBalloonTip(2000, "Overpass",
                     "Running in the system tray. Double-click the icon to show.", Forms.ToolTipIcon.Info);
             }
         }

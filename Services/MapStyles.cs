@@ -1,6 +1,6 @@
-using SatelliteEyesWin.Models;
+using Overpass.Models;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public static class MapStyles
 {

@@ -1,4 +1,4 @@
-namespace SatelliteEyesWin.Models;
+namespace Overpass.Models;
 
 public class MapStyle
 {

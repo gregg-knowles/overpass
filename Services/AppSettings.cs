@@ -1,8 +1,8 @@
 using System.IO;
 using System.Text.Json;
-using SatelliteEyesWin.Models;
+using Overpass.Models;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public class AppSettings
 {
@@ -21,7 +21,7 @@ public class AppSettings
     public bool DayNightDimming { get; set; } = true;
 
     private static readonly string SettingsDir =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SatelliteEyesWin");
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Overpass");
     private static readonly string SettingsPath = Path.Combine(SettingsDir, "settings.json");
 
     public static string CacheDir => Path.Combine(SettingsDir, "cache");

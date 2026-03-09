@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public static class ImageEffects
 {

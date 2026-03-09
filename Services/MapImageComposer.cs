@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public class MapImageComposer
 {
@@ -18,7 +18,7 @@ public class MapImageComposer
     static MapImageComposer()
     {
         _httpClient = new HttpClient(new HttpClientHandler()) { Timeout = TimeSpan.FromSeconds(60) };
-        _httpClient.DefaultRequestHeaders.Add("User-Agent", "SatelliteEyesWin/1.0");
+        _httpClient.DefaultRequestHeaders.Add("User-Agent", "Overpass/1.0");
     }
 
     public static async Task<string?> ComposeMapImage(

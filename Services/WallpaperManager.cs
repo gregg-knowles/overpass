@@ -4,7 +4,7 @@ using Microsoft.Win32;
 using Windows.Storage;
 using Windows.System.UserProfile;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public static class WallpaperManager
 {

@@ -16,11 +16,11 @@ if errorlevel 1 goto :fail
 
 echo.
 echo Done!
-echo   Standalone: %OUT%\standalone\SatelliteEyesWin.exe
-echo   Small:      %OUT%\small\SatelliteEyesWin.exe
+echo   Standalone: %OUT%\standalone\Overpass.exe
+echo   Small:      %OUT%\small\Overpass.exe
 echo.
-for %%F in ("%OUT%\standalone\SatelliteEyesWin.exe") do echo   Standalone size: %%~zF bytes
-for %%F in ("%OUT%\small\SatelliteEyesWin.exe") do echo   Small size:      %%~zF bytes
+for %%F in ("%OUT%\standalone\Overpass.exe") do echo   Standalone size: %%~zF bytes
+for %%F in ("%OUT%\small\Overpass.exe") do echo   Small size:      %%~zF bytes
 exit /b 0
 
 :fail

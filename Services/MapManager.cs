@@ -1,10 +1,10 @@
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
-using SatelliteEyesWin.Models;
+using Overpass.Models;
 using Microsoft.Win32;
 
-namespace SatelliteEyesWin.Services;
+namespace Overpass.Services;
 
 public enum MapStatus { Offline, Updating, Success, Error }
 

@@ -1,4 +1,4 @@
-# Satellite Eyes for Windows
+# Overpass
 
 Sets your desktop wallpaper to satellite imagery of your location. A Windows port of [Satellite Eyes for macOS](https://github.com/tomtaylor/satellite-eyes) by Tom Taylor.
 
@@ -72,13 +72,13 @@ This creates both standalone and framework-dependent single-file executables in 
 All settings are accessible from the main window. Settings are stored in:
 
 ```
-%APPDATA%\SatelliteEyesWin\settings.json
+%APPDATA%\Overpass\settings.json
 ```
 
 Cached map images are stored in:
 
 ```
-%APPDATA%\SatelliteEyesWin\cache\
+%APPDATA%\Overpass\cache\
 ```
 
 ## GPS location troubleshooting
