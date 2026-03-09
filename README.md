@@ -4,11 +4,11 @@ Sets your desktop wallpaper to satellite imagery of your location. A Windows por
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-blue)
 ![.NET](https://img.shields.io/badge/.NET-8.0-purple)
-![License](https://img.shields.io/github/license/gregg-knowles/satellite-eyes-win)
-![GitHub release](https://img.shields.io/github/v/release/gregg-knowles/satellite-eyes-win)
-![Downloads](https://img.shields.io/github/downloads/gregg-knowles/satellite-eyes-win/total)
-![GitHub stars](https://img.shields.io/github/stars/gregg-knowles/satellite-eyes-win)
-![GitHub issues](https://img.shields.io/github/issues/gregg-knowles/satellite-eyes-win)
+![License](https://img.shields.io/github/license/gregg-knowles/overpass)
+![GitHub release](https://img.shields.io/github/v/release/gregg-knowles/overpass)
+![Downloads](https://img.shields.io/github/downloads/gregg-knowles/overpass/total)
+![GitHub stars](https://img.shields.io/github/stars/gregg-knowles/overpass)
+![GitHub issues](https://img.shields.io/github/issues/gregg-knowles/overpass)
 
 ## Features
 
@@ -39,7 +39,7 @@ Sets your desktop wallpaper to satellite imagery of your location. A Windows por
 
 ## Download
 
-Grab the latest release from the [Releases](https://github.com/gregg-knowles/satellite-eyes-win/releases) page:
+Grab the latest release from the [Releases](https://github.com/gregg-knowles/overpass/releases) page:
 
 - **Standalone** (~180 MB) — includes the .NET runtime, runs anywhere
 - **Small** (~25 MB) — requires [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed
@@ -47,8 +47,8 @@ Grab the latest release from the [Releases](https://github.com/gregg-knowles/sat
 ## Building from source
 
 ```
-git clone https://github.com/gregg-knowles/satellite-eyes-win.git
-cd satellite-eyes-win
+git clone https://github.com/gregg-knowles/overpass.git
+cd overpass
 dotnet build
 ```
 
