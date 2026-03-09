@@ -28,9 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="satellite.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="satellite.ico" />
   </ItemGroup>
 
 </Project>

@@ -456,13 +456,19 @@ public partial class MainWindow : Window
 
     private static Icon LoadAppIcon()
     {
+        // Try loading from embedded WPF resource
         try
         {
-            string path = Path.Combine(AppContext.BaseDirectory, "satellite.ico");
-            if (File.Exists(path)) return new Icon(path, 16, 16);
+            var sri = System.Windows.Application.GetResourceStream(new Uri("satellite.ico", UriKind.Relative));
+            if (sri != null)
+            {
+                using var stream = sri.Stream;
+                return new Icon(stream, 16, 16);
+            }
         }
         catch { }
 
+        // Fallback: generated icon
         var bmp = new Bitmap(16, 16);
         using (var g = Graphics.FromImage(bmp))
         {
