@@ -40,10 +40,17 @@ public class LocationService
         catch { }
     }
 
-    public void StartCurrentLocation()
+    public void StartCurrentLocation(int pollingIntervalMinutes = 10)
     {
         StopTimer();
         _ = GetLocationAsync();
+
+        if (pollingIntervalMinutes > 0)
+        {
+            var interval = TimeSpan.FromMinutes(pollingIntervalMinutes);
+            _rotationTimer = new System.Threading.Timer(
+                _ => _ = GetLocationAsync(), null, interval, interval);
+        }
     }
 
     private async Task GetLocationAsync()
@@ -171,10 +178,22 @@ public class LocationService
 
     private void SetPosition(double lat, double lon)
     {
+        bool moved = !HasLocation || DistanceKm(Latitude, Longitude, lat, lon) > 0.5;
         Latitude = lat;
         Longitude = lon;
         HasLocation = true;
-        LocationChanged?.Invoke(lat, lon);
+        if (moved) LocationChanged?.Invoke(lat, lon);
+    }
+
+    private static double DistanceKm(double lat1, double lon1, double lat2, double lon2)
+    {
+        const double R = 6371.0;
+        double dLat = (lat2 - lat1) * Math.PI / 180.0;
+        double dLon = (lon2 - lon1) * Math.PI / 180.0;
+        double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                   Math.Cos(lat1 * Math.PI / 180.0) * Math.Cos(lat2 * Math.PI / 180.0) *
+                   Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+        return R * 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
     }
 
     private void StopTimer()

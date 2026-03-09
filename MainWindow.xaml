@@ -106,6 +106,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -121,8 +122,18 @@
                     <ComboBoxItem Content="World Heritage Sites" Tag="world_heritage_site"/>
                 </ComboBox>
 
-                <TextBlock x:Name="RotationLabel" Grid.Row="1" Grid.Column="0" Text="Change every" Style="{StaticResource FieldLabel}"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="RotationCombo"
+                <TextBlock x:Name="PollingLabel" Grid.Row="1" Grid.Column="0" Text="Re-check" Style="{StaticResource FieldLabel}" Margin="0,0,0,6"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="PollingCombo" Margin="0,0,0,6"
+                          SelectionChanged="PollingCombo_Changed">
+                    <ComboBoxItem Content="Every 5 minutes" Tag="5"/>
+                    <ComboBoxItem Content="Every 10 minutes" Tag="10"/>
+                    <ComboBoxItem Content="Every 30 minutes" Tag="30"/>
+                    <ComboBoxItem Content="Every hour" Tag="60"/>
+                    <ComboBoxItem Content="Never" Tag="0"/>
+                </ComboBox>
+
+                <TextBlock x:Name="RotationLabel" Grid.Row="2" Grid.Column="0" Text="Change every" Style="{StaticResource FieldLabel}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="RotationCombo"
                           SelectionChanged="RotationCombo_Changed">
                     <ComboBoxItem Content="1 Hour" Tag="3600"/>
                     <ComboBoxItem Content="6 Hours" Tag="21600"/>

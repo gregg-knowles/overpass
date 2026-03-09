@@ -31,7 +31,7 @@ public class MapManager
         StatusChanged?.Invoke(MapStatus.Offline, "Starting...");
 
         if (_settings.UseCurrentLocation)
-            _locationService.StartCurrentLocation();
+            _locationService.StartCurrentLocation(_settings.GpsPollingIntervalMinutes);
         else
             _locationService.StartRandomLocations(_settings.RandomLocationCategory, _settings.RotationIntervalSeconds);
     }

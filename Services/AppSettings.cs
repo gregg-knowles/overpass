@@ -19,6 +19,7 @@ public class AppSettings
     public bool ShowWeatherOverlay { get; set; } = false;
     public string WeatherOverlayPosition { get; set; } = "top-right";
     public bool DayNightDimming { get; set; } = true;
+    public int GpsPollingIntervalMinutes { get; set; } = 10;
 
     private static readonly string SettingsDir =
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Overpass");
@@ -50,6 +51,7 @@ public class AppSettings
             ImageEffectId = "none";
         ZoomLevel = Math.Clamp(ZoomLevel, 1, 22);
         RotationIntervalSeconds = Math.Clamp(RotationIntervalSeconds, 60, 604800);
+        GpsPollingIntervalMinutes = Math.Clamp(GpsPollingIntervalMinutes, 1, 1440);
         string[] validPositions = ["top-right", "top-left", "bottom-right", "bottom-left"];
         if (!validPositions.Contains(WeatherOverlayPosition))
             WeatherOverlayPosition = "top-right";

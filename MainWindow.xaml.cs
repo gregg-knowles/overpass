@@ -129,6 +129,13 @@ public partial class MainWindow : Window
         }
         if (RotationCombo.SelectedItem == null) RotationCombo.SelectedIndex = 2;
 
+        SelectComboByTag(PollingCombo, _settings.GpsPollingIntervalMinutes.ToString());
+        if (PollingCombo.SelectedItem == null) PollingCombo.SelectedIndex = 1;
+
+        var pollVis = _settings.UseCurrentLocation ? Visibility.Visible : Visibility.Collapsed;
+        PollingLabel.Visibility = pollVis;
+        PollingCombo.Visibility = pollVis;
+
         var rotVis = _settings.UseCurrentLocation ? Visibility.Collapsed : Visibility.Visible;
         RotationLabel.Visibility = rotVis;
         RotationCombo.Visibility = rotVis;
@@ -204,6 +211,7 @@ public partial class MainWindow : Window
         _settings.UseCurrentLocation = locTag == "gps";
         _settings.RandomLocationCategory = locTag == "gps" || locTag == "all" ? "" : locTag;
         _settings.RotationIntervalSeconds = int.Parse((string)((ComboBoxItem)RotationCombo.SelectedItem).Tag);
+        _settings.GpsPollingIntervalMinutes = int.Parse((string)((ComboBoxItem)PollingCombo.SelectedItem).Tag);
         _settings.MapStyleId = (string)((ComboBoxItem)MapStyleCombo.SelectedItem).Tag;
         _settings.ZoomLevel = (int)ZoomSlider.Value;
         _settings.ImageEffectId = (string)((ComboBoxItem)EffectCombo.SelectedItem).Tag;
@@ -225,13 +233,18 @@ public partial class MainWindow : Window
     {
         if (_isLoading || RotationCombo == null) return;
         var tag = (string?)((LocationSourceCombo.SelectedItem as ComboBoxItem)?.Tag);
-        var vis = tag == "gps" ? Visibility.Collapsed : Visibility.Visible;
-        RotationLabel.Visibility = vis;
-        RotationCombo.Visibility = vis;
+        bool isGps = tag == "gps";
+        PollingLabel.Visibility = isGps ? Visibility.Visible : Visibility.Collapsed;
+        PollingCombo.Visibility = isGps ? Visibility.Visible : Visibility.Collapsed;
+        RotationLabel.Visibility = isGps ? Visibility.Collapsed : Visibility.Visible;
+        RotationCombo.Visibility = isGps ? Visibility.Collapsed : Visibility.Visible;
         SaveAndApply(restartLocation: true);
     }
 
     private void RotationCombo_Changed(object sender, SelectionChangedEventArgs e)
+        => SaveAndApply(restartLocation: true);
+
+    private void PollingCombo_Changed(object sender, SelectionChangedEventArgs e)
         => SaveAndApply(restartLocation: true);
 
     private void MapStyleCombo_Changed(object sender, SelectionChangedEventArgs e)
