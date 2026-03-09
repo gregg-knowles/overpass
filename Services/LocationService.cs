@@ -67,24 +67,18 @@ public class LocationService
         }
         catch { }
 
-        // fall back to IP geolocation
-        try
+        // fall back to IP geolocation — try multiple providers in order
+        LocationError?.Invoke("Using IP-based location...");
+        var result = await TryIpProviders();
+        if (result != null)
         {
-            LocationError?.Invoke("Using IP-based location...");
-            var json = await _http.GetStringAsync("https://ipapi.co/json/");
-            using var doc = JsonDocument.Parse(json);
-            var root = doc.RootElement;
-            double lat = root.GetProperty("latitude").GetDouble();
-            double lon = root.GetProperty("longitude").GetDouble();
-            string city = root.TryGetProperty("city", out var c) ? c.GetString() ?? "" : "";
-
-            SetPosition(lat, lon);
-            CurrentLocationName = !string.IsNullOrEmpty(city) ? city : null;
+            SetPosition(result.Value.lat, result.Value.lon);
+            CurrentLocationName = !string.IsNullOrEmpty(result.Value.city) ? result.Value.city : null;
             if (CurrentLocationName != null) LocationNameChanged?.Invoke(CurrentLocationName);
         }
-        catch (Exception ex)
+        else
         {
-            LocationError?.Invoke($"Could not determine location: {ex.Message}");
+            LocationError?.Invoke("Could not determine location. Check your internet connection.");
         }
     }
 
@@ -116,6 +110,63 @@ public class LocationService
         SetPosition(loc.Latitude, loc.Longitude);
         CurrentLocationName = loc.Name;
         LocationNameChanged?.Invoke(loc.Name);
+    }
+
+    private static async Task<(double lat, double lon, string city)?> TryIpProviders()
+    {
+        // 1. ipapi.co (HTTPS, 1000/day free)
+        try
+        {
+            var json = await _http.GetStringAsync("https://ipapi.co/json/");
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            return (
+                root.GetProperty("latitude").GetDouble(),
+                root.GetProperty("longitude").GetDouble(),
+                root.TryGetProperty("city", out var c) ? c.GetString() ?? "" : "");
+        }
+        catch { }
+
+        // 2. ip-api.com (HTTP only, 45/min free)
+        try
+        {
+            var json = await _http.GetStringAsync("http://ip-api.com/json/?fields=lat,lon,city");
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            return (
+                root.GetProperty("lat").GetDouble(),
+                root.GetProperty("lon").GetDouble(),
+                root.TryGetProperty("city", out var c) ? c.GetString() ?? "" : "");
+        }
+        catch { }
+
+        // 3. ipwho.is (HTTPS, 10000/month free)
+        try
+        {
+            var json = await _http.GetStringAsync("https://ipwho.is/");
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            return (
+                root.GetProperty("latitude").GetDouble(),
+                root.GetProperty("longitude").GetDouble(),
+                root.TryGetProperty("city", out var c) ? c.GetString() ?? "" : "");
+        }
+        catch { }
+
+        // 4. freeipapi.com (HTTPS, 60/min free)
+        try
+        {
+            var json = await _http.GetStringAsync("https://freeipapi.com/api/json");
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            return (
+                root.GetProperty("latitude").GetDouble(),
+                root.GetProperty("longitude").GetDouble(),
+                root.TryGetProperty("cityName", out var c) ? c.GetString() ?? "" : "");
+        }
+        catch { }
+
+        return null;
     }
 
     private void SetPosition(double lat, double lon)
